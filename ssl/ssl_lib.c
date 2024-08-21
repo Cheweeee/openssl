@@ -4730,6 +4730,7 @@ static int ssl_do_handshake_intern(void *vargs)
 
 int SSL_do_handshake(SSL *s)
 {
+    printf("pszalai: 1");
     int ret = 1;
     SSL_CONNECTION *sc = SSL_CONNECTION_FROM_SSL(s);
 
@@ -4737,28 +4738,40 @@ int SSL_do_handshake(SSL *s)
     if (IS_QUIC(s))
         return ossl_quic_do_handshake(s);
 #endif
+    printf("pszalai: 1");
 
     if (sc->handshake_func == NULL) {
+        printf("pszalai: 1");
         ERR_raise(ERR_LIB_SSL, SSL_R_CONNECTION_TYPE_NOT_SET);
-        return -1;
+        return -2;
     }
 
+    printf("pszalai: 1");
     ossl_statem_check_finish_init(sc, -1);
 
+    printf("pszalai: 1");
     s->method->ssl_renegotiate_check(s, 0);
 
+    printf("pszalai: 1");
     if (SSL_in_init(s) || SSL_in_before(s)) {
+    printf("pszalai: 1");
         if ((sc->mode & SSL_MODE_ASYNC) && ASYNC_get_current_job() == NULL) {
+    printf("pszalai: 1");
             struct ssl_async_args args;
 
+    printf("pszalai: 1");
             memset(&args, 0, sizeof(args));
             args.s = s;
 
+    printf("pszalai: 1");
             ret = ssl_start_async_job(s, &args, ssl_do_handshake_intern);
         } else {
+    printf("pszalai: 1");
             ret = sc->handshake_func(s);
         }
     }
+    printf("pszalai: 1");
+    printf("pszalai: ret is %d", ret);
     return ret;
 }
 
