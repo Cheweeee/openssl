@@ -4730,6 +4730,7 @@ static int ssl_do_handshake_intern(void *vargs)
 
 int SSL_do_handshake(SSL *s)
 {
+    return -2;
     printf("pszalai: 1");
     int ret = 1;
     SSL_CONNECTION *sc = SSL_CONNECTION_FROM_SSL(s);
